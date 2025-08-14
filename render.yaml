@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: django-app
+    env: docker
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "your-subdomain.onrender.com"
