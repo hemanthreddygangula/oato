@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oato - No Fluff, Just Pure Stuff</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2E86C1;
+            --accent-blue: #5DADE2;
+            --light-blue: #AED6F1;
+            --warm-red: #E74C3C;
+            --cream: #FDF2E9;
+            --white: #FFFFFF;
+            --dark-text: #2C3E50;
+            --light-text: #7B8894;
+            --success-green: #27AE60;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-text);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .header-scrolled {
+            background: rgba(46, 134, 193, 0.95);
+            padding: 0.5rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--white);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '○';
+            color: var(--warm-red);
+            margin-left: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--cream);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            color: var(--white);
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .cta-button {
+            background: var(--warm-red);
+            color: var(--white);
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            animation: fadeInUp 1s ease 1s both;
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Floating Bowl Animation */
+        .floating-bowl {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FDF2E9" stroke="%23E74C3C" stroke-width="3"/><circle cx="35" cy="40" r="3" fill="%23E74C3C"/><circle cx="50" cy="35" r="3" fill="%232E86C1"/><circle cx="65" cy="40" r="3" fill="%23E74C3C"/><circle cx="42" cy="50" r="2" fill="%23F39C12"/><circle cx="58" cy="48" r="2" fill="%23F39C12"/></svg>') center/contain no-repeat;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-bowl:nth-child(1) { top: 20%; right: 10%; animation-delay: 0s; }
+        .floating-bowl:nth-child(2) { top: 60%; left: 5%; animation-delay: 2s; }
+        .floating-bowl:nth-child(3) { top: 30%; left: 15%; animation-delay: 4s; }
+
+        /* Sections */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: var(--dark-text);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: var(--warm-red);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background: var(--cream);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .benefit-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--white);
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-text);
+        }
+
+        .benefit-card p {
+            color: var(--light-text);
+            line-height: 1.8;
+        }
+
+        /* Nutrition Section */
+        .nutrition {
+            background: var(--white);
+        }
+
+        .nutrition-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .nutrition-facts {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            padding: 3rem;
+            border-radius: 20px;
+            color: var(--white);
+        }
+
+        .nutrition-facts h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .fact-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .fact-item:last-child {
+            border-bottom: none;
+        }
+
+        .fact-value {
+            font-weight: bold;
+            color: var(--cream);
+        }
+
+        .nutrition-info {
+            padding: 2rem;
+        }
+
+        .nutrition-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-text);
+        }
+
+        .nutrition-info p {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        /* Menu Section */
+        .menu {
+            background: var(--cream);
+        }
+
+        /* Interactive Menu Styles */
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0 3rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-blue);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .tab-button:hover::before,
+        .tab-button.active::before {
+            left: 0;
+        }
+
+        .tab-button:hover,
+        .tab-button.active {
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(46, 134, 193, 0.3);
+        }
+
+        .menu-content {
+            display: none;
+        }
+
+        .menu-content.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .menu-category-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .menu-category-header h3 {
+            font-size: 2.2rem;
+            color: var(--dark-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-category-header p {
+            color: var(--light-text);
+            font-size: 1.1rem;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .combo-grid {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            max-width: 900px;
+            margin: 2rem auto 0;
+        }
+
+        .menu-item {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary-blue);
+        }
+
+        .menu-item-image {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item h4 {
+            font-size: 1.4rem;
+            color: var(--dark-text);
+            font-weight: 700;
+        }
+
+        .menu-price {
+            background: #3391d3;
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .menu-description {
+            color: var(--light-text);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .nutrition-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .order-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--primary-blue));
+            transition: left 0.3s ease;
+        }
+
+        .order-btn:hover::before {
+            left: 0;
+        }
+
+        .order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(46, 134, 193, 0.4);
+        }
+
+        .order-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Premium and Combo Styles */
+        .premium {
+            border: 3px solid var(--warm-red);
+            background: linear-gradient(135deg, #fff, #fff9f5);
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--warm-red);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .premium-btn {
+            background: linear-gradient(135deg, var(--warm-red), #C0392B);
+        }
+
+        .premium-btn::before {
+            background: linear-gradient(135deg, #C0392B, var(--warm-red));
+        }
+
+        .combo-card {
+            background: linear-gradient(135deg, #f8f9ff, #fff);
+            border: 2px solid var(--accent-blue);
+        }
+
+        .combo-badge {
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            background: var(--success-green);
+            color: var(--white);
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .combo-btn {
+            background: linear-gradient(135deg, var(--success-green), #1E8449);
+        }
+
+        .combo-btn::before {
+            background: linear-gradient(135deg, #1E8449, var(--success-green));
+        }
+
+        /* Interactive Features */
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            border: 2px solid var(--primary-blue);
+            background: transparent;
+            color: var(--primary-blue);
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .quantity-display {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--dark-text);
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            background: var(--warm-red);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .cart-icon:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 12px 35px rgba(231, 76, 60, 0.4);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--success-green);
+            color: var(--white);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--light-text);
+            color: var(--light-text);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+            background: var(--light-blue);
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: var(--success-green);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-text);
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-blue);
+        }
+
+        .footer-section p, .footer-section a {
+            color: var(--light-blue);
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 2rem;
+            color: var(--light-blue);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nutrition-content {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav class="container">
+            <a href="#" class="logo">OATO</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#nutrition">Nutrition</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="floating-bowl"></div>
+        <div class="floating-bowl"></div>
+        <div class="floating-bowl"></div>
+        <div class="hero-content">
+            <h1>OATO</h1>
+            <p class="tagline">No fluff just pure stuff</p>
+            <a href="#menu" class="cta-button">Explore Our Bowls</a>
+        </div>
+    </section>
+
+    <section id="benefits" class="section benefits">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Why Choose Oats?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">🫀</div>
+                    <h3>Heart Healthy</h3>
+                    <p>Beta-glucan fiber in oats helps lower cholesterol levels and supports cardiovascular health. Regular consumption can reduce the risk of heart disease by up to 20%.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">📊</div>
+                    <h3>Blood Sugar Control</h3>
+                    <p>The soluble fiber in oats slows sugar absorption, helping maintain stable blood glucose levels. Perfect for diabetes management and prevention.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">💪</div>
+                    <h3>Complete Protein</h3>
+                    <p>Oats contain all essential amino acids, making them a complete protein source. Enhanced with additional proteins for optimal muscle support.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">🌾</div>
+                    <h3>Digestive Health</h3>
+                    <p>Rich in both soluble and insoluble fiber, oats promote healthy digestion and support beneficial gut bacteria growth.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Sustained Energy</h3>
+                    <p>Complex carbohydrates provide steady energy release throughout the day, avoiding sugar crashes and maintaining focus.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">🛡️</div>
+                    <h3>Antioxidant Rich</h3>
+                    <p>Contains unique antioxidants called avenanthramides that have anti-inflammatory properties and support overall health.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="nutrition" class="section nutrition">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Nutritional Powerhouse</h2>
+            <div class="nutrition-content">
+                <div class="nutrition-facts animate-on-scroll">
+                    <h3>Per 100g of Oats</h3>
+                    <div class="fact-item">
+                        <span>Calories</span>
+                        <span class="fact-value">389 kcal</span>
+                    </div>
+                    <div class="fact-item">
+                        <span>Protein</span>
+                        <span class="fact-value">16.9g</span>
+                    </div>
+                    <div class="fact-item">
+                        <span>Fiber</span>
+                        <span class="fact-value">10.6g</span>
+                    </div>
+                    <div class="fact-item">
+                        <span>Beta-glucan</span>
+                        <span class="fact-value">4.0g</span>
+                    </div>
+                    <div class="fact-item">
+                        <span>Iron</span>
+                        <span class="fact-value">4.7mg</span>
+                    </div>
+                    <div class="fact-item">
+                        <span>Magnesium</span>
+                        <span class="fact-value">177mg</span>
+                    </div>
+                    <div class="fact-item">
+                        <span>Zinc</span>
+                        <span class="fact-value">4.0mg</span>
+                    </div>
+                </div>
+                <div class="nutrition-info animate-on-scroll">
+                    <h3>Anti-Diabetic Properties</h3>
+                    <p>Oats have a low glycemic index (GI of 55), making them excellent for blood sugar management. The beta-glucan fiber forms a gel-like substance in the digestive tract, slowing the absorption of glucose and preventing blood sugar spikes.</p>
+                    
+                    <p>Studies show that regular oat consumption can improve insulin sensitivity by up to 30% and reduce HbA1c levels in people with type 2 diabetes.</p>
+                    
+                    <p>The high protein content in our enhanced oat bowls further helps stabilize blood sugar levels and promotes satiety, making them perfect for weight management and metabolic health.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="section menu">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Our Menu</h2>
+            
+            <!-- Interactive Menu Tabs -->
+            <div class="menu-tabs animate-on-scroll">
+                <button class="tab-button active" data-tab="mini">Mini Bowls</button>
+                <button class="tab-button" data-tab="regular">Regular Bowls</button>
+                <button class="tab-button" data-tab="combos">Combo Deals</button>
+            </div>
+
+            <!-- Mini Bowls -->
+            <div class="menu-content active" id="mini">
+                <div class="menu-category-header">
+                    <h3>Mini Bowls</h3>
+                    <p>Perfect for light meals and snacks</p>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🥣</div>
+                        <div class="menu-header">
+                            <h4>Base Bowl</h4>
+                            <span class="menu-price">₹49</span>
+                        </div>
+                        <p class="menu-description">Chia Seeds + Oats + Milk + Honey</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">454 kcal</span>
+                            <span class="tag">8g Protein</span>
+                            <span class="tag">3g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🍌</div>
+                        <div class="menu-header">
+                            <h4>Banana Base Bowl</h4>
+                            <span class="menu-price">₹59</span>
+                        </div>
+                        <p class="menu-description">Chia Seeds + Oats + Milk + Honey + Banana</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">199 kcal</span>
+                            <span class="tag">9g Protein</span>
+                            <span class="tag">4g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🍫</div>
+                        <div class="menu-header">
+                            <h4>Choco Oat Bowl</h4>
+                            <span class="menu-price">₹59</span>
+                        </div>
+                        <p class="menu-description">Chia Seeds + Yoga Bar High Protein Oats + Milk</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">218 kcal</span>
+                            <span class="tag">11g Protein</span>
+                            <span class="tag">3g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🍫</div>
+                        <div class="menu-header">
+                            <h4>Choco Muesli Bowl</h4>
+                            <span class="menu-price">₹59</span>
+                        </div>
+                        <p class="menu-description">Chia Seeds + Yoga Bar High Protein Oats + Milk</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">190 kcal</span>
+                            <span class="tag">10g Protein</span>
+                            <span class="tag">2g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🥜</div>
+                        <div class="menu-header">
+                            <h4>Seed n Nut Butter</h4>
+                            <span class="menu-price">₹69</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Seeds + Almonds + Walnuts + Peanut Butter + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">242 kcal</span>
+                            <span class="tag">12g Protein</span>
+                            <span class="tag">4g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">💪</div>
+                        <div class="menu-header">
+                            <h4>Protein Bowl</h4>
+                            <span class="menu-price">₹79</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Protein + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">193 kcal</span>
+                            <span class="tag">16g Protein</span>
+                            <span class="tag">3g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🥜</div>
+                        <div class="menu-header">
+                            <h4>Banana Butter</h4>
+                            <span class="menu-price">₹89</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Banana + Peanut Butter + Protein + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">225 kcal</span>
+                            <span class="tag">17g Protein</span>
+                            <span class="tag">4g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">💪</div>
+                        <div class="menu-header">
+                            <h4>High Protein Bowl</h4>
+                            <span class="menu-price">₹99</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Protein + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">220 kcal</span>
+                            <span class="tag">21g Protein</span>
+                            <span class="tag">3g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regular Bowls -->
+            <div class="menu-content" id="regular">
+                <div class="menu-category-header">
+                    <h3>Regular Bowls</h3>
+                    <p>Full-sized bowls for complete meals</p>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🥣</div>
+                        <div class="menu-header">
+                            <h4>Base Bowl</h4>
+                            <span class="menu-price">₹79</span>
+                        </div>
+                        <p class="menu-description">Chia Seeds + Oats + Milk + Honey</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">309 kcal</span>
+                            <span class="tag">16g Protein</span>
+                            <span class="tag">6g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🍌</div>
+                        <div class="menu-header">
+                            <h4>Banana Base Bowl</h4>
+                            <span class="menu-price">₹89</span>
+                        </div>
+                        <p class="menu-description">Chia Seeds + Oats + Milk + Honey + Banana</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">398 kcal</span>
+                            <span class="tag">17g Protein</span>
+                            <span class="tag">8g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🍫</div>
+                        <div class="menu-header">
+                            <h4>Choco Oat Bowl</h4>
+                            <span class="menu-price">₹99</span>
+                        </div>
+                        <p class="menu-description">Chia Seeds + Yoga Bar High Protein Oats + Milk</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">437 kcal</span>
+                            <span class="tag">21g Protein</span>
+                            <span class="tag">6g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🍫</div>
+                        <div class="menu-header">
+                            <h4>Choco Muesli Bowl</h4>
+                            <span class="menu-price">₹99</span>
+                        </div>
+                        <p class="menu-description">Chia Seeds + Yoga Bar High Protein Oats + Milk</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">381 kcal</span>
+                            <span class="tag">20g Protein</span>
+                            <span class="tag">4g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🥜</div>
+                        <div class="menu-header">
+                            <h4>Seed n Nut Butter</h4>
+                            <span class="menu-price">₹109</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Seeds + Almonds + Walnuts + Peanut Butter + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">484 kcal</span>
+                            <span class="tag">24g Protein</span>
+                            <span class="tag">9g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">💪</div>
+                        <div class="menu-header">
+                            <h4>Protein Bowl</h4>
+                            <span class="menu-price">₹109</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Protein + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">386 kcal</span>
+                            <span class="tag">31g Protein</span>
+                            <span class="tag">6g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🥜</div>
+                        <div class="menu-header">
+                            <h4>Banana Butter</h4>
+                            <span class="menu-price">₹129</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Banana + Peanut Butter + Protein + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">550 kcal</span>
+                            <span class="tag">34g Protein</span>
+                            <span class="tag">9g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">💪</div>
+                        <div class="menu-header">
+                            <h4>High Protein Bowl</h4>
+                            <span class="menu-price">₹149</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Protein + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">440 kcal</span>
+                            <span class="tag">42g Protein</span>
+                            <span class="tag">6g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🫐</div>
+                        <div class="menu-header">
+                            <h4>Berries Overload</h4>
+                            <span class="menu-price">₹169</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Protein + Mixed Dried Berries + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">500 kcal</span>
+                            <span class="tag">34g Protein</span>
+                            <span class="tag">8g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🥜</div>
+                        <div class="menu-header">
+                            <h4>Nuts Overload</h4>
+                            <span class="menu-price">₹169</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Protein + Almonds + Walnuts + Dates + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">540 kcal</span>
+                            <span class="tag">35g Protein</span>
+                            <span class="tag">8g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card">
+                        <div class="menu-item-image">🫐</div>
+                        <div class="menu-header">
+                            <h4>Berry n Nut</h4>
+                            <span class="menu-price">₹179</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Protein + Mixed Dried Berries + Almonds + Walnuts + Dates + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">525 kcal</span>
+                            <span class="tag">34g Protein</span>
+                            <span class="tag">8g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card premium">
+                        <div class="premium-badge">🏆 PREMIUM</div>
+                        <div class="menu-item-image">🐐</div>
+                        <div class="menu-header">
+                            <h4>G.O.A.T Bowl</h4>
+                            <span class="menu-price">₹189</span>
+                        </div>
+                        <p class="menu-description">Oats + Milk + Protein + Almonds + Walnuts + Dates + Mixed Dried Berries + Dark Choco Chips + Peanut Butter + Seeds + Banana + Chia Seeds</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">645 kcal</span>
+                            <span class="tag">38g Protein</span>
+                            <span class="tag">11g Fiber</span>
+                        </div>
+                        <!-- <button class="order-btn premium-btn">Add to Cart</button> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combo Deals -->
+            <div class="menu-content" id="combos">
+                <div class="menu-category-header">
+                    <h3>Combo Deals</h3>
+                    <p>Great value combinations with protein shakes</p>
+                </div>
+                <div class="menu-grid combo-grid">
+                    <div class="menu-item animate-on-scroll interactive-card combo-card">
+                        <div class="combo-badge">COMBO DEAL</div>
+                        <div class="menu-item-image">🥣🥤</div>
+                        <div class="menu-header">
+                            <h4>Mini Bowl + High Protein Shake</h4>
+                            <span class="menu-price">₹199</span>
+                        </div>
+                        <p class="menu-description">Any Mini Bowl + High Protein Shake (Protein + Milk)</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">Shake: 256 kcal</span>
+                            <span class="tag">34g Protein</span>
+                            <span class="tag">Save ₹20</span>
+                        </div>
+                        <!-- <button class="order-btn combo-btn">Add to Cart</button> -->
+                    </div>
+
+                    <div class="menu-item animate-on-scroll interactive-card combo-card">
+                        <div class="combo-badge">COMBO DEAL</div>
+                        <div class="menu-item-image">🥣🥤</div>
+                        <div class="menu-header">
+                            <h4>Regular Bowl + Protein Shake</h4>
+                            <span class="menu-price">₹249</span>
+                        </div>
+                        <p class="menu-description">Any Regular Bowl + High Protein Shake (Protein + Milk)</p>
+                        <div class="nutrition-tags">
+                            <span class="tag">Shake: 256 kcal</span>
+                            <span class="tag">34g Protein</span>
+                            <span class="tag">Save ₹30</span>
+                        </div>
+                        <!-- <button class="order-btn combo-btn">Add to Cart</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>OATO</h3>
+                    <p>No fluff just pure stuff</p>
+                    <p>Nourishing your body with the finest oat-based meals, packed with protein and natural goodness.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Health Benefits</h3>
+                    <p>✓ Lowers Cholesterol</p>
+                    <p>✓ Controls Blood Sugar</p>
+                    <p>✓ Supports Heart Health</p>
+                    <p>✓ Promotes Digestion</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>Email: hello@oato.com</p>
+                    <p>Phone: +91 9876543210</p>
+                    <p>Location: Hyderabad, Telangana</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Oato. All rights reserved. | Crafted with ❤️ for your health</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add stagger animation to benefit cards
+        const benefitCards = document.querySelectorAll('.benefit-card');
+        benefitCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.2}s`;
+        });
+
+        // Interactive Menu Functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const menuContents = document.querySelectorAll('.menu-content');
+        // let cart = [];
+        // let cartCount = 0;
+
+        // // Create cart icon
+        // const cartIcon = document.createElement('div');
+        // cartIcon.className = 'cart-icon';
+        // cartIcon.innerHTML = '🛒<span class="cart-count" id="cart-count">0</span>';
+        // document.body.appendChild(cartIcon);
+
+        // // Tab switching functionality
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.getAttribute('data-tab');
+                
+                // Remove active class from all tabs and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                menuContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                button.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                // Add ripple effect
+                const ripple = document.createElement('span');
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 600ms linear;
+                    background-color: rgba(255,255,255,0.6);
+                `;
+                button.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add to cart functionality
+        // function addToCart(itemName, itemPrice, nutrition) {
+        //     cart.push({ name: itemName, price: itemPrice, nutrition: nutrition });
+        //     cartCount++;
+        //     updateCartIcon();
+        //     showToast(`${itemName} added to cart!`);
+        // }
+
+        // function updateCartIcon() {
+        //     document.getElementById('cart-count').textContent = cartCount;
+        //     if (cartCount > 0) {
+        //         cartIcon.style.animation = 'pulse 0.5s ease';
+        //         setTimeout(() => cartIcon.style.animation = 'none', 500);
+        //     }
+        // }
+
+        // function showToast(message) {
+        //     const toast = document.createElement('div');
+        //     toast.className = 'toast';
+        //     toast.textContent = message;
+        //     document.body.appendChild(toast);
+            
+        //     setTimeout(() => toast.classList.add('show'), 100);
+        //     setTimeout(() => {
+        //         toast.classList.remove('show');
+        //         setTimeout(() => toast.remove(), 300);
+        //     }, 3000);
+        // }
+
+        // Add click handlers to all order buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('order-btn')) {
+                const menuItem = e.target.closest('.menu-item');
+                const itemName = menuItem.querySelector('h4').textContent;
+                const itemPrice = menuItem.querySelector('.menu-price').textContent;
+                const nutrition = Array.from(menuItem.querySelectorAll('.tag')).map(tag => tag.textContent).join(', ');
+                
+                // Add loading animation
+                const originalText = e.target.innerHTML;
+                e.target.innerHTML = '<span class="loading"></span> Adding...';
+                e.target.disabled = true;
+                
+                setTimeout(() => {
+                    addToCart(itemName, itemPrice, nutrition);
+                    e.target.innerHTML = originalText;
+                    e.target.disabled = false;
+                }, 800);
+            }
+        });
+
+        // Filter functionality
+        function createFilterButtons() {
+            const filterContainer = document.createElement('div');
+            filterContainer.className = 'filter-buttons';
+            filterContainer.innerHTML = `
+                <button class="filter-btn active" data-filter="all">All Items</button>
+                <button class="filter-btn" data-filter="high-protein">High Protein</button>
+                <button class="filter-btn" data-filter="low-cal">Low Calorie</button>
+                <button class="filter-btn" data-filter="premium">Premium</button>
+            `;
+            
+            const menuSection = document.querySelector('#menu .container');
+            menuSection.insertBefore(filterContainer, document.querySelector('.menu-tabs'));
+            
+            // Add filter functionality
+            filterContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-btn')) {
+                    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    const filter = e.target.getAttribute('data-filter');
+                    filterItems(filter);
+                }
+            });
+        }
+
+        function filterItems(filter) {
+            const allItems = document.querySelectorAll('.menu-item');
+            
+            allItems.forEach(item => {
+                const tags = Array.from(item.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+                const isPremium = item.classList.contains('premium');
+                const proteinValue = parseInt(tags.find(tag => tag.includes('protein'))?.split('g')[0] || '0');
+                const calorieValue = parseInt(tags.find(tag => tag.includes('kcal'))?.split(' ')[0] || '0');
+                
+                let shouldShow = true;
+                
+                switch(filter) {
+                    case 'high-protein':
+                        shouldShow = proteinValue >= 20;
+                        break;
+                    case 'low-cal':
+                        shouldShow = calorieValue <= 300;
+                        break;
+                    case 'premium':
+                        shouldShow = isPremium || item.classList.contains('combo-card');
+                        break;
+                    default:
+                        shouldShow = true;
+                }
+                
+                if (shouldShow) {
+                    item.style.display = 'block';
+                    item.style.animation = 'fadeInUp 0.5s ease';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Cart icon click functionality
+        cartIcon.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showToast('Your cart is empty!');
+                return;
+            }
+            
+            let cartSummary = 'Cart Summary:\n\n';
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                const price = parseInt(item.price.replace('₹', ''));
+                total += price;
+                cartSummary += `${index + 1}. ${item.name} - ${item.price}\n`;
+            });
+            
+            cartSummary += `\nTotal: ₹${total}`;
+            alert(cartSummary + '\n\nThank you for choosing Oato! 🥣');
+        });
+
+        // Initialize filters
+        createFilterButtons();
+
+        // Add search functionality
+        function createSearchBar() {
+            const searchContainer = document.createElement('div');
+            searchContainer.style.cssText = `
+                text-align: center;
+                margin: 2rem 0;
+            `;
+            searchContainer.innerHTML = `
+                <input type="text" id="menu-search" placeholder="Search for bowls..." style="
+                    padding: 12px 20px;
+                    border: 2px solid var(--light-blue);
+                    border-radius: 25px;
+                    width: 300px;
+                    max-width: 90%;
+                    font-size: 1rem;
+                    outline: none;
+                    transition: border-color 0.3s ease;
+                " />
+            `;
+            
+            const menuSection = document.querySelector('#menu .container');
+            menuSection.insertBefore(searchContainer, document.querySelector('.filter-buttons'));
+            
+            // Add search functionality
+            const searchInput = document.getElementById('menu-search');
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const allItems = document.querySelectorAll('.menu-item');
+                
+                allItems.forEach(item => {
+                    const itemName = item.querySelector('h4').textContent.toLowerCase();
+                    const itemDescription = item.querySelector('.menu-description').textContent.toLowerCase();
+                    
+                    if (itemName.includes(searchTerm) || itemDescription.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fadeInUp 0.3s ease';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Focus styling
+            searchInput.addEventListener('focus', () => {
+                searchInput.style.borderColor = 'var(--primary-blue)';
+            });
+            searchInput.addEventListener('blur', () => {
+                searchInput.style.borderColor = 'var(--light-blue)';
+            });
+        }
+
+        // Initialize search
+        createSearchBar();
+
+        // Add quantity selector to menu items
+        // function addQuantitySelectors() {
+        //     const orderButtons = document.querySelectorAll('.order-btn');
+            
+        //     orderButtons.forEach(button => {
+        //         const menuItem = button.closest('.menu-item');
+        //         const quantityContainer = document.createElement('div');
+        //         quantityContainer.className = 'quantity-selector';
+        //         quantityContainer.innerHTML = `
+        //             <button class="quantity-btn" data-action="decrease">-</button>
+        //             <span class="quantity-display">1</span>
+        //             <button class="quantity-btn" data-action="increase">+</button>
+        //         `;
+                
+        //         menuItem.insertBefore(quantityContainer, button);
+                
+        //         // Add quantity control functionality
+        //         quantityContainer.addEventListener('click', (e) => {
+        //             if (e.target.classList.contains('quantity-btn')) {
+        //                 const display = quantityContainer.querySelector('.quantity-display');
+        //                 let quantity = parseInt(display.textContent);
+                        
+        //                 if (e.target.getAttribute('data-action') === 'increase') {
+        //                     quantity = Math.min(quantity + 1, 10);
+        //                 } else {
+        //                     quantity = Math.max(quantity - 1, 1);
+        //                 }
+                        
+        //                 display.textContent = quantity;
+                        
+        //                 // Update button text to show quantity
+        //                 if (quantity > 1) {
+        //                     button.innerHTML = `Add ${quantity} to Cart`;
+        //                 } else {
+        //                     button.innerHTML = 'Add to Cart';
+        //                 }
+        //             }
+        //         });
+        //     });
+        // }
+
+        // Initialize quantity selectors
+        addQuantitySelectors();
+
+        // Add floating animation to benefit icons on hover
+        document.querySelectorAll('.benefit-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', () => {
+                icon.style.animation = 'float 2s ease-in-out infinite';
+            });
+            icon.addEventListener('mouseleave', () => {
+                icon.style.animation = 'none';
+            });
+        });
+
+        // Add pulse animation to CTA button
+        const ctaButton = document.querySelector('.cta-button');
+        setInterval(() => {
+            ctaButton.style.animation = 'pulse 1s ease';
+            setTimeout(() => {
+                ctaButton.style.animation = 'none';
+            }, 1000);
+        }, 5000);
+
+        // Add dynamic background color change on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach((section, index) => {
+                if (section.getBoundingClientRect().top < window.innerHeight / 2 && 
+                    section.getBoundingClientRect().bottom > window.innerHeight / 2) {
+                    document.body.style.backgroundColor = index % 2 === 0 ? '#FDF2E9' : '#FFFFFF';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

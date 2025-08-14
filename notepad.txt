@@ -1,0 +1,25 @@
+- Install Python & pip (if not already installed)
+sudo apt update
+sudo apt install python3 python3-pip python3-venv -y
+
+- Install Git
+sudo apt install git -y
+
+- Create and activate venv
+python3 -m venv venv
+source venv/bin/activate
+
+- Start a django project
+django-admin startproject myproject .
+
+- Run the development server
+python3 manage.py runserver
+
+
+---------------------------------------------------------------
+Prepare Django for Vercel
+- Install Gunicorn (production server for Python)
+pip install gunicorn
+
+- Install whitenoise (to serve static files without extra config)
+pip install whitenoise
